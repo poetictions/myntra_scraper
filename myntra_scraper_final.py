@@ -81,6 +81,7 @@ with f:
     write = csv.writer(f)
     write.writerows(data)
 
+f.close()
 
     
 
