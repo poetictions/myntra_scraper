@@ -44,7 +44,7 @@ print("Links collected:", len(product_links1))
 
 product_links2 = product_links1
 
-for i in range(0,200):
+for i in range(0,len(productlinks)):
     product_links2[i] = 'https://www.myntra.com/'+ product_links2[i]
     
 headers = {'User-Agent' : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36'}
@@ -55,7 +55,7 @@ productlinks = product_links2
 
 data= [('name', 'category', 'user_rating')]
 
-for i in range(50, 100):
+for i in range(0, len(productlinks)):
     s = requests.Session()
     res = s.get(productlinks[i], headers=headers)
     soup = BeautifulSoup(res.text,"lxml")
