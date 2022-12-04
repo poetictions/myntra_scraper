@@ -54,10 +54,9 @@ headers = {'User-Agent' : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_5) Apple
 productlinks = []
 productlinks = product_links2
 
-data= [('name', 'category'#, 'user_rating'
-        )]
+data= [('name', 'category', 'user_rating')]
 
-for i in range(0,len(productlinks)):
+for i in range(50, 100):
     s = requests.Session()
     res = s.get(productlinks[i], headers=headers)
     soup = BeautifulSoup(res.text,"lxml")
@@ -69,10 +68,14 @@ for i in range(0,len(productlinks)):
         
     a = json.loads(script[script.index('{'):])
     productname = (a['pdpData'])['name']
-    productcategory = ((a['pdpData'])['analytics'])['articleType']
-    #productrating = ((a['pdpData'])['ratings'])['averageRating']
-    data.append((productname, productcategory, #productrating
-                 ))
+    productcategory = 'sneakers'
+    if 'averageRating' not in ((a['pdpData'])['ratings']):
+        productrating = 'Not Rated'
+    else:
+        productrating = ((a['pdpData'])['ratings'])['averageRating']
+        
+    data.append((productname, productcategory, productrating))
+    
 
     
 print('product_data is being stored in product_data.csv file. Please wait....')
@@ -80,14 +83,3 @@ f = open('product_data.csv', 'w+', newline ='')
 with f:   
     write = csv.writer(f)
     write.writerows(data)
-
-f.close()
-
-    
-
-        
-    
-
-
-
-
