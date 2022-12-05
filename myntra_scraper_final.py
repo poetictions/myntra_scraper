@@ -1,5 +1,6 @@
 import requests, json
 from bs4 import BeautifulSoup
+import bs4
 import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -44,7 +45,7 @@ print("Links collected:", len(product_links1))
 
 product_links2 = product_links1
 
-for i in range(0,len(productlinks)):
+for i in range(0,len(product_links2)):
     product_links2[i] = 'https://www.myntra.com/'+ product_links2[i]
     
 headers = {'User-Agent' : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36'}
@@ -66,14 +67,16 @@ for i in range(0, len(productlinks)):
             break
         
     a = json.loads(script[script.index('{'):])
-    productname = (a['pdpData'])['name']
-    productcategory = 'sneakers'
-    if 'averageRating' not in ((a['pdpData'])['ratings']):
-        productrating = 'Not Rated'
+    if 'sneakers' in (a['pdpData'])['name']:
+        productname = (a['pdpData'])['name']
+        productcategory = 'sneakers'
+        if 'averageRating' not in ((a['pdpData'])['ratings']):
+            productrating = 'Not Rated'
+        else:
+            productrating = ((a['pdpData'])['ratings'])['averageRating']
+        data.append((productname, productcategory, productrating))
     else:
-        productrating = ((a['pdpData'])['ratings'])['averageRating']
-        
-    data.append((productname, productcategory, productrating))
+        pass
     
 
     
