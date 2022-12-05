@@ -55,7 +55,7 @@ productlinks = []
 productlinks = product_links2
 
 data= [('name', 'category', 'user_rating')]
-
+print(productlinks)
 for i in range(0, len(productlinks)):
     s = requests.Session()
     res = s.get(productlinks[i], headers=headers)
@@ -67,13 +67,13 @@ for i in range(0, len(productlinks)):
             break
         
     a = json.loads(script[script.index('{'):])
-    if 'sneakers' in (a['pdpData'])['name']:
-        productname = (a['pdpData'])['name']
-        productcategory = 'sneakers'
-        if 'averageRating' not in ((a['pdpData'])['ratings']):
-            productrating = 'Not Rated'
-        else:
-            productrating = ((a['pdpData'])['ratings'])['averageRating']
+    productname = (a['pdpData'])['name']
+    productcategory = 'sneakers'
+    if 'averageRating' not in ((a['pdpData'])['ratings']):
+        productrating = 'Not Rated'
+    else:
+        productrating = ((a['pdpData'])['ratings'])['averageRating']
+    if 'sneakers' or 'Sneakers' in productname:
         data.append((productname, productcategory, productrating))
     else:
         pass
